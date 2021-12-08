@@ -14,14 +14,14 @@ public class AdvancedArrayList implements CustomList {
 
     @Override
     public int get(int index) {
-        if (index < 0 || index >= source.length - 1)
+        if (index < 0 || index >= source.length)
             throw new CustomOutOfBoundsException();
         return source[index];
     }
 
     @Override
     public void set(int index, int value) {
-        if (index < 0 || index >= source.length - 1)
+        if (index < 0 || index >= source.length)
             throw new CustomOutOfBoundsException();
         source[index] = value;
     }
@@ -42,9 +42,9 @@ public class AdvancedArrayList implements CustomList {
 
     @Override
     public void removeById(int index) {
-        if (index < 0 || index >= source.length - 1)
+        if (index < 0 || index >= source.length)
             throw new CustomOutOfBoundsException();
-        int[] newSource = new int[source.length - 1];
+        int[] newSource = new int[source.length];
 
         for (int i = 0; i < index; i++) {
             newSource[i] = source[i];

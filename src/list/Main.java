@@ -1,5 +1,7 @@
 package list;
 
+import java.util.Iterator;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -72,6 +74,23 @@ public class Main {
             arrayList.insert(-1, 78);
         } catch (CustomOutOfBoundsException ex) {
             System.out.println("The index is out of bounds");
+        }
+
+        CustomLinkedList<Integer> linkedList = new CustomLinkedList<Integer>();
+        linkedList.add(5);
+        linkedList.add(9);
+        linkedList.add(4);
+        linkedList.add(8);
+        System.out.println(linkedList.contains(9));
+        System.out.println(linkedList.removeByValue(9));
+        System.out.println(linkedList.removeById(1));
+        linkedList.insert(1, 18);
+        linkedList.println();
+
+        Iterator<Integer> iterator = list.getIterator();
+        while (iterator.hasNext()){
+            int number = iterator.next();
+            System.out.println(number);
         }
     }
 }

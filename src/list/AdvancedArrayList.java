@@ -1,28 +1,32 @@
 package list;
 
-public class AdvancedArrayList implements CustomList {
+import java.util.Iterator;
 
-    private int[] source;
+public class AdvancedArrayList<T> implements CustomList<T> {
+
+    private T[] source;
 
     public AdvancedArrayList() {
-        source = new int[0];
+        source = (T[]) new Object[0];
     }
 
     public AdvancedArrayList(int initialSize) {
-        source = new int[initialSize];
+        source = (T[]) new Object[initialSize];
     }
 
     @Override
-    public int get(int index) {
+    public T get(int index) {
         if (index < 0 || index >= source.length)
             throw new CustomOutOfBoundsException();
+
         return source[index];
     }
 
     @Override
-    public void set(int index, int value) {
+    public void set(int index, T value) {
         if (index < 0 || index >= source.length)
             throw new CustomOutOfBoundsException();
+
         source[index] = value;
     }
 
@@ -32,19 +36,21 @@ public class AdvancedArrayList implements CustomList {
     }
 
     @Override
-    public boolean contains(int value) {
+    public boolean contains(T value) {
         for (int i = 0; i < source.length; i++) {
-            if (value == source[i])
+            if (value.equals(source[i]))
                 return true;
         }
         return false;
     }
 
     @Override
-    public void removeById(int index) {
+    public T removeById(int index) {
         if (index < 0 || index >= source.length)
             throw new CustomOutOfBoundsException();
-        int[] newSource = new int[source.length];
+
+        T[] newSource = (T[]) new Object[source.length - 1];
+        T res = source[index];
 
         for (int i = 0; i < index; i++) {
             newSource[i] = source[i];
@@ -54,18 +60,31 @@ public class AdvancedArrayList implements CustomList {
         }
 
         source = newSource;
+        return res;
     }
 
     @Override
-    public void add(int value) {
+    public boolean removeByValue(T value) {
+        for (int i = 0; i < source.length; i++) {
+            if (source[i].equals(value)) {
+                removeById(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void add(T value) {
         insert(source.length, value);
     }
 
     @Override
-    public void insert(int index, int value) {
+    public void insert(int index, T value) {
         if (index < 0 || index > source.length)
             throw new CustomOutOfBoundsException();
-        int[] newSource = new int[source.length + 1];
+
+        T[] newSource = (T[]) new Object[source.length + 1];
 
         for (int i = 0; i < index; i++) {
             newSource[i] = source[i];
@@ -84,5 +103,33 @@ public class AdvancedArrayList implements CustomList {
             System.out.print(source[i] + " ");
         }
         System.out.println();
+    }
+
+    public Iterator<T> getIterator() {
+        Iterator<T> iterator = new AdvancedArrayList.BasicIterator<>(source);
+        return iterator;
+    }
+
+    private static class BasicIterator<E> implements Iterator<E> {
+
+        private final E[] array;
+        private int currentIndex = 0;
+
+        public BasicIterator(E[] source) {
+            array = source;
+
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < array.length;
+        }
+
+        @Override
+        public E next() {
+            E res = array[currentIndex];
+            currentIndex++;
+            return res;
+        }
     }
 }

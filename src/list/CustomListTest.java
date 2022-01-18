@@ -2,6 +2,7 @@ package list;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -432,7 +433,6 @@ abstract class CustomListTest {
 
     @Test
     public void testIterator_severalElements() {
-        //intList = new CustomLinkedList<>();
         intList.add(5);
         intList.add(10);
         intList.add(2);
@@ -441,7 +441,7 @@ abstract class CustomListTest {
 
         int[] expected = {5, 10, 2, 25, 6};
 
-        Iterator<Integer> iterator = intList.getIterator();
+        Iterator<Integer> iterator = intList.iterator();
 
         int i = 0;
         while (iterator.hasNext()) {
@@ -454,38 +454,21 @@ abstract class CustomListTest {
     }
 
     @Test
-    public void testIterator_OneElement() {
+    public void testIterator_oneElement() {
         intList.add(5);
+        Iterator<Integer> iterator = intList.iterator();
 
-        int[] expected = {5};
+        int first = iterator.next();
 
-        Iterator<Integer> iterator = intList.getIterator();
-
-        int i = 0;
-        while (iterator.hasNext()) {
-            int currentNumber = iterator.next();
-            assertEquals(expected[i], currentNumber);
-            i++;
-        }
-        assertEquals(i, expected.length);
+        assertEquals(5, first);
+        assertFalse(iterator.hasNext());
 
     }
 
     @Test
-    public void testIterator_ZeroElements() {
-
-        int[] expected = {};
-
-        Iterator<Integer> iterator = intList.getIterator();
-
-        int i = 0;
-        while (iterator.hasNext()) {
-            int currentNumber = iterator.next();
-            assertEquals(expected[i], currentNumber);
-            i++;
-        }
-        assertEquals(i, expected.length);
-
-
+    public void testIterator_noElements() {
+        Iterator<Integer> iterator = intList.iterator();
+        assertFalse(iterator.hasNext());
     }
+
 }

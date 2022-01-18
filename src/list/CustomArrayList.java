@@ -1,6 +1,9 @@
 package list;
 
+import java.util.Comparator;
 import java.util.Iterator;
+
+import static com.sun.xml.internal.xsom.impl.UName.comparator;
 
 public class CustomArrayList<T> implements CustomList<T> {
 
@@ -10,7 +13,6 @@ public class CustomArrayList<T> implements CustomList<T> {
     private int size;
 
     public CustomArrayList() {
-
         source = (T[]) new Object[INITIAL_CAPACITY];
     }
 
@@ -107,33 +109,48 @@ public class CustomArrayList<T> implements CustomList<T> {
         System.out.println();
     }
 
-    @Override
-    public Iterator<T> getIterator() {
-        Iterator<T> iterator = new BasicIterator<>(source, size);
-        return iterator;
-    }
+    // TODO implement.
+    public void sort(Comparator<T> comparator) {
+        T result;
+        for (int i = 0; i < size; i++) {
+            for (int j = 1; j < (size - i); j++) {
+                if (comparator.compare(source[j], source[j - 1]) == 1) {
+                    //swap elements
+                    result = source[j - 1];
+                    source[j - 1] = source[j];
+                    source[j] = result;
+                }
+            }
+            }
+            }
 
-    private static class BasicIterator<E> implements Iterator<E> {
+            @Override
+            public Iterator<T> iterator () {
+                Iterator<T> iterator = new BasicIterator<>(source, size);
+                return iterator;
+            }
 
-        private final E[] array;
-        private final int size;
-        private int currentIndex = 0;
+            private static class BasicIterator<E> implements Iterator<E> {
 
-        public BasicIterator(E[] source, int size) {
-            array = source;
-            this.size = size;
+                private final E[] array;
+                private final int size;
+                private int currentIndex = 0;
+
+                public BasicIterator(E[] source, int size) {
+                    array = source;
+                    this.size = size;
+                }
+
+                @Override
+                public boolean hasNext() {
+                    return currentIndex < size;
+                }
+
+                @Override
+                public E next() {
+                    E res = array[currentIndex];
+                    currentIndex++;
+                    return res;
+                }
+            }
         }
-
-        @Override
-        public boolean hasNext() {
-            return currentIndex < size;
-        }
-
-        @Override
-        public E next() {
-            E res = array[currentIndex];
-            currentIndex++;
-            return res;
-        }
-    }
-}

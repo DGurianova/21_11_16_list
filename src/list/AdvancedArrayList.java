@@ -105,29 +105,23 @@ public class AdvancedArrayList<T> implements CustomList<T> {
         System.out.println();
     }
 
-    public Iterator<T> getIterator() {
-        Iterator<T> iterator = new AdvancedArrayList.BasicIterator<>(source);
-        return iterator;
+    @Override
+    public Iterator<T> iterator() {
+        return new BasicIterator();
     }
 
-    private static class BasicIterator<E> implements Iterator<E> {
+    private class BasicIterator implements Iterator<T> {
 
-        private final E[] array;
         private int currentIndex = 0;
-
-        public BasicIterator(E[] source) {
-            array = source;
-
-        }
 
         @Override
         public boolean hasNext() {
-            return currentIndex < array.length;
+            return currentIndex < source.length;
         }
 
         @Override
-        public E next() {
-            E res = array[currentIndex];
+        public T next() {
+            T res = source[currentIndex];
             currentIndex++;
             return res;
         }

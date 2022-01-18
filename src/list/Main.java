@@ -87,10 +87,15 @@ public class Main {
         linkedList.insert(1, 18);
         linkedList.println();
 
-        Iterator<Integer> iterator = list.getIterator();
-        while (iterator.hasNext()){
-            int number = iterator.next();
+//        Iterator<Integer> iterator = list.iterator(); // развернутая запись
+//        while (iterator.hasNext()) {
+//            int number = iterator.next();
+//            System.out.println(number);
+//        }
+
+        for (int number : list) {
             System.out.println(number);
+
         }
     }
 }

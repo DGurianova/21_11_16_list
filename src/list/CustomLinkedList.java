@@ -175,7 +175,7 @@ public class CustomLinkedList<T> implements CustomList<T> {
     }
 
     @Override
-    public Iterator<T> getIterator() {
+    public Iterator<T> iterator() {
         Iterator<T> iterator = new BasicIterator<>(first);
         return iterator;
     }
